@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const todoRoutes = require('./routes/todo');
+const statesRoutes = require('./routes/states');
 const connectDB = require('./db');
 
 const data = require('./models/statesData.json');
@@ -11,6 +11,6 @@ app.use(bodyParser.json());
 
 connectDB();
 
-app.use('/api/todos', todoRoutes);
+app.use('/api/states', statesRoutes);
 
 module.exports = { app, data };

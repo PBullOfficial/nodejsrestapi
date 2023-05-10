@@ -1,21 +1,17 @@
 const mongoose = require('mongoose');
 
-
-const todoSchema = new mongoose.Schema({
-  title: {
+const stateSchema = new mongoose.Schema({
+  stateCode: {
     type: String,
+    required: true,
+    unique: true
+  },
+  funfacts: {
+    type: [String],
     required: true
-  },
-  completed: {
-    type: Boolean,
-    default: false
-  },
-  created_at: {
-    type: Date,
-    default: Date.now
   }
 });
 
-const Todo = mongoose.model('Todo', todoSchema);
+const State = mongoose.model('State', stateSchema);
 
-module.exports = Todo;
+module.exports = State;
