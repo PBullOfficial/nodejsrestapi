@@ -19,7 +19,7 @@ const deleteRoutes = require('./routes/deleteRoutes');
 const postRoutes = require('./routes/postRoutes');
 
 // Mount routes
-app.use('/api/states', statesRoutes);
+app.use('/api/states', states);
 app.use('/api/get', getRoutes);
 app.use('/api/patch', patchRoutes);
 app.use('/api/delete', deleteRoutes);
