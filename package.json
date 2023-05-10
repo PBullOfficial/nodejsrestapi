@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Node.js REST api project",
   "main": "app.js",
+  "engines": {
+    "node": "14.x"
+  },
   "dependencies": {
     "dotenv": "^16.0.0"
   },
