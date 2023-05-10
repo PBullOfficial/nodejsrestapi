@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const db = require('./db');
 const todoRoutes = require('./routes/todo');
 
-const data = require('./statesData.json');
+const data = require('./models/statesData.json');
 console.log(data);
 
 const app = express();
