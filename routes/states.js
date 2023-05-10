@@ -1,10 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const State = require('../models/states.js');
+const stateData = require('../models/statesData.json');
 
+// Get all state data
 router.get('/', async (req, res) => {
   try {
-    const states = await State.find();
+    const { contig } = req.query;
+    let states = stateData;
+
+    if (contig === 'true') {
+      states = states.filter(state => state.code !== 'AK' && state.code !== 'HI');
+    } else if (contig === 'false') {
+      states = states.filter(state => state.code === 'AK' || state.code === 'HI');
+    }
+
     res.json(states);
   } catch (err) {
     console.error(err.message);
@@ -12,13 +22,15 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+// Get state data for a specific state
+router.get('/:state', async (req, res) => {
   try {
-    const state = new State({
-      stateCode: req.body.stateCode,
-      funfacts: req.body.funfacts
-    });
-    await state.save();
+    const state = stateData.find(state => state.slug === req.params.state);
+
+    if (!state) {
+      return res.status(404).json({ msg: 'State not found' });
+    }
+
     res.json(state);
   } catch (err) {
     console.error(err.message);
@@ -26,30 +38,68 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+// Get the capital city for a specific state
+router.get('/:state/capital', async (req, res) => {
   try {
-    const state = await State.findById(req.params.id);
+    const state = stateData.find(state => state.slug === req.params.state);
+
     if (!state) {
       return res.status(404).json({ msg: 'State not found' });
     }
-    state.stateCode = req.body.stateCode;
-    state.funfacts = req.body.funfacts;
-    await state.save();
-    res.json(state);
+
+    const { capital_city } = state;
+    res.json({ state: state.state, capital: capital_city });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
 
-router.delete('/:id', async (req, res) => {
+// Get the nickname for a specific state
+router.get('/:state/nickname', async (req, res) => {
   try {
-    const state = await State.findById(req.params.id);
+    const state = stateData.find(state => state.slug === req.params.state);
+
     if (!state) {
       return res.status(404).json({ msg: 'State not found' });
     }
-    await State.findByIdAndRemove(req.params.id);
-    res.json({ message: 'State deleted' });
+
+    const { nickname } = state;
+    res.json({ state: state.state, nickname });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// Get the population for a specific state
+router.get('/:state/population', async (req, res) => {
+  try {
+    const state = stateData.find(state => state.slug === req.params.state);
+
+    if (!state) {
+      return res.status(404).json({ msg: 'State not found' });
+    }
+
+    const { population } = state;
+    res.json({ state: state.state, population });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// Get the admission date for a specific state
+router.get('/:state/admission', async (req, res) => {
+  try {
+    const state = stateData.find(state => state.slug === req.params.state);
+
+    if (!state) {
+      return res.status(404).json({ msg: 'State not found' });
+    }
+
+    const { admission_date } = state;
+    res.json({ state: state.state, admitted: admission_date });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
