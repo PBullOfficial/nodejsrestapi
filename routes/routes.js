@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const State = require('../models/States');
+const { State } = require('../models/States');
 const stateData = require('../models/statesData.json');
 const fs = require('fs');
 const path = require('path');
@@ -35,6 +35,7 @@ router.get('/', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
 
 
 // Get state data for a specific state
