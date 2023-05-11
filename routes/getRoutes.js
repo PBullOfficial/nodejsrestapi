@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const State = require('../models/States');
 const stateData = require('../models/statesData.json');
+const fs = require('fs');
+const path = require('path');
+
+// Read the states data from JSON file
+const statesData = JSON.parse(fs.readFileSync(path.join(__dirname, 'statesData.json')));
 
 // Get all state data
 router.get('/', async (req, res) => {
@@ -11,7 +16,7 @@ router.get('/', async (req, res) => {
     let statesFromDB = await State.find({}, { funfacts: 0 });
 
     let states = statesFromDB.map(stateFromDB => {
-      const stateDataItem = stateData.find(stateDataItem => stateDataItem.code === stateFromDB.stateCode);
+      const stateDataItem = statesData.find(stateDataItem => stateDataItem.code === stateFromDB.stateCode);
       return {
         ...stateDataItem,
         funfacts: stateFromDB.funfacts,
@@ -30,6 +35,7 @@ router.get('/', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
 
 // Get state data for a specific state
 router.get('/:state', async (req, res) => {
