@@ -26,14 +26,12 @@ app.use(bodyParser.json());
 connectDB();
 
 // Routes
-const states = require('./routes/states');
 const getRoutes = require('./routes/getRoutes');
 const patchRoutes = require('./routes/patchRoutes');
 const deleteRoutes = require('./routes/deleteRoutes');
 const postRoutes = require('./routes/postRoutes');
 
 // Mount routes
-app.use('/api/states', states);
 app.use('/api/get', getRoutes);
 app.use('/api/patch', patchRoutes);
 app.use('/api/delete', deleteRoutes);

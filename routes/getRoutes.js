@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const State = require('../models/states.js');
+const State = require('../models/states');
 const stateData = require('../models/statesData.json');
 
 // Get all state data
