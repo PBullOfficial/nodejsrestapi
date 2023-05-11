@@ -32,10 +32,8 @@ const deleteRoutes = require('./routes/deleteRoutes');
 const postRoutes = require('./routes/postRoutes');
 
 // Mount routes
-app.use('/api/get', getRoutes);
-app.use('/api/patch', patchRoutes);
-app.use('/api/delete', deleteRoutes);
-app.use('/api/post', postRoutes);
+app.use('/', './routes/routes');
+
 
 // Catch-all 404 handler
 app.use((req, res, next) => {

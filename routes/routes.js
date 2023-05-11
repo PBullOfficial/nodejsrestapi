@@ -138,4 +138,88 @@ router.get('/:state/admission', async (req, res) => {
   }
 });
 
+router.patch('/:state/funfact', async (req, res) => {
+    try {
+      const { state } = req.params;
+      const { index, funfact } = req.body;
+      
+      if (!index || !funfact) {
+        return res.status(400).json({ message: 'Invalid request body.' });
+      }
+      
+      const foundState = await State.findOne({ stateCode: state });
+      if (!foundState) {
+        return res.status(404).json({ message: 'State not found.' });
+      }
+      
+      const funFacts = foundState.funFacts;
+      const adjustedIndex = index - 1;
+      
+      if (adjustedIndex < 0 || adjustedIndex >= funFacts.length) {
+        return res.status(400).json({ message: 'Invalid index.' });
+      }
+      
+      funFacts[adjustedIndex] = funfact;
+      foundState.funFacts = funFacts;
+      await foundState.save();
+      
+      res.json(foundState);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({ message: 'Server error.' });
+    }
+  });
+
+  router.delete('/states/:state/funfact', async (req, res) => {
+    try {
+      const state = req.params.state.toUpperCase();
+      const index = req.body.index;
+      if (!index) {
+        return res.status(400).json({ error: 'Index parameter is missing.' });
+      }
+      const foundState = await State.findOne({ stateCode: state });
+      if (!foundState) {
+        return res.status(404).json({ error: 'State not found.' });
+      }
+      const funFacts = foundState.funFacts;
+      const removedFact = funFacts.splice(index - 1, 1);
+      await foundState.save();
+      return res.json({ removedFact });
+    } catch (err) {
+      console.error(err.message);
+      return res.status(500).json({ error: 'Server error.' });
+    }
+  });
+
+  // Add fun facts for a specific state
+router.post('/:state/funfact', async (req, res) => {
+    try {
+      const state = await State.findOne({ stateCode: req.params.state });
+  
+      if (!state) {
+        return res.status(404).json({ msg: 'State not found' });
+      }
+  
+      const { funfacts } = req.body;
+  
+      if (!funfacts || !Array.isArray(funfacts)) {
+        return res.status(400).json({ msg: 'Invalid request body' });
+      }
+  
+      // Add new fun facts to existing ones, if any
+      const updatedFunFacts = [...state.funfacts, ...funfacts];
+      const updatedState = await State.findOneAndUpdate(
+        { stateCode: req.params.state },
+        { funfacts: updatedFunFacts },
+        { new: true } // Return updated document
+      );
+  
+      res.json(updatedState);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  });
+
+
 module.exports = router;
