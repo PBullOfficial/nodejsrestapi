@@ -9,7 +9,7 @@ const path = require('path');
 const statesData = JSON.parse(fs.readFileSync(path.join(__dirname, '../models/statesData.json')));
 
 // Get all state data
-router.get('/', async (req, res) => {
+router.get('/states/', async (req, res) => {
   try {
     const { contig } = req.query;
 
@@ -35,8 +35,6 @@ router.get('/', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
-
-
 
 // Get state data for a specific state
 router.get('/:state', async (req, res) => {
@@ -69,7 +67,6 @@ router.get('/:state', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
-
 
 // Get the capital city for a specific state
 router.get('/:state/capital', async (req, res) => {
