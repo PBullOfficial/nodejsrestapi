@@ -29,7 +29,7 @@ connectDB();
 const routes = require('./routes/routes');
 
 // Mount routes
-app.use('/', './routes/routes', routes);
+app.use('/', routes);
 
 
 // Catch-all 404 handler
