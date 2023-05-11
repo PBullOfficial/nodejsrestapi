@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Read the states data from JSON file
-const statesData = JSON.parse(fs.readFileSync(path.join(__dirname, 'statesData.json')));
+const statesData = JSON.parse(fs.readFileSync(path.join(__dirname, '../models/statesData.json')));
 
 // Get all state data
 router.get('/', async (req, res) => {
