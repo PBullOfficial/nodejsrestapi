@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const State = require('../models/states');
+const State = require('../models/States');
 
 // Add fun facts for a specific state
 router.post('/:state/funfact', async (req, res) => {

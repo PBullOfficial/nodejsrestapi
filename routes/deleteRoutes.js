@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const State = require('../models/states');
+const State = require('../models/States');
 
 router.delete('/states/:state/funfact', async (req, res) => {
   try {
