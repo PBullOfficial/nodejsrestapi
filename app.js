@@ -26,13 +26,10 @@ app.use(bodyParser.json());
 connectDB();
 
 // Routes
-const getRoutes = require('./routes/getRoutes');
-const patchRoutes = require('./routes/patchRoutes');
-const deleteRoutes = require('./routes/deleteRoutes');
-const postRoutes = require('./routes/postRoutes');
+const routes = require('./routes/routes');
 
 // Mount routes
-app.use('/', './routes/routes');
+app.use('/', './routes/routes', routes);
 
 
 // Catch-all 404 handler
