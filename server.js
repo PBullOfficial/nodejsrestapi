@@ -12,25 +12,24 @@ const PORT = process.env.PORT || 3500;
 // Connect to MongoDB
 connectDB();
 
-// custom middleware logger
+// Custom middleware logger
 app.use(logger);
 
 // Cross Origin Resource Sharing
-// Open to all as Public API.. 
-// but please do understand how to apply 
-// CORS options with allowed origins
+// Open to all as Public API***
 app.use(cors());
 
-// built-in middleware for json 
+// Built-in middleware for json 
 app.use(express.json());
 
-//serve static files
+// Serve static files
 app.use('/', express.static(path.join(__dirname, '/public')));
 
-// routes 
+// Routes 
 app.use('/', require('./routes/root'));
 app.use('/states', require('./routes/api/states'));
 
+// Error handling middleware
 app.all('*', (req, res) => {
     res.status(404);
     if (req.accepts('html')) {
@@ -44,6 +43,7 @@ app.all('*', (req, res) => {
 
 app.use(errorHandler);
 
+// Start server
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

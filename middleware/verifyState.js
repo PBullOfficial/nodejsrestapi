@@ -1,19 +1,23 @@
 const statesJSONData = require('../model/statesData.json');
 
+// Middleware to verify state parameter
 const verifyState = () => {
     return (req, res, next) => {
         // No need to check if param exists because...
         // if URL param does not exist, catch all 404 is sent (see server.js)
 
-        const stateAbbr = req.params.state.toUpperCase() // set param to uppercase
+        // Set param to uppercase
+        const stateAbbr = req.params.state.toUpperCase() 
 
-        const stateCodes = statesJSONData.map(st => st.code) // get list of codes from JSON data
+        // Get list of codes from JSON data
+        const stateCodes = statesJSONData.map(st => st.code) 
 
-        const isState = stateCodes.find(code => code === stateAbbr) // get code if exists in list
+        // Get code if exists in list
+        const isState = stateCodes.find(code => code === stateAbbr) 
 
         if (!isState) return res.status(400).json({ 'message': 'Invalid state abbreviation parameter' })
 
-        // attach state code to request object and call next
+        // Attach state code to request object and call next
         req.code = stateAbbr
         next()
     }

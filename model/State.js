@@ -7,6 +7,7 @@ const stateSchema = new mongoose.Schema({
     unique: true,
     minlength: 2,
     maxlength: 2,
+    // Regular expression to validate state code
     validate: {
       validator: function(v) {
         return /^[A-Z]+$/.test(v);
@@ -20,8 +21,10 @@ const stateSchema = new mongoose.Schema({
   }
 });
 
+// Create model from schema
 const State = mongoose.model('State', stateSchema);
 
+// Get all states from database
 const getStateData = async () => {
   try {
     const states = await State.find();
@@ -32,6 +35,7 @@ const getStateData = async () => {
   }
 };
 
+// Export model and function
 module.exports = {
   State,
   getStateData

@@ -4,27 +4,37 @@ const statesController = require('../../controllers/statesController');
 const verifyState = require('../../middleware/verifyState');
 
 router.route('/')
-    .get(statesController.getAllStates) // returns html (if accepted) or text response with directions
+    // Returns html (if accepted) or text response with directions
+    .get(statesController.getAllStates) 
 
+    // Retrieve all info about specified state 
 router.route('/:state')
-    .get(verifyState(), statesController.getOneState) // retrieve all info about specified state 
+    .get(verifyState(), statesController.getOneState)
 
 router.route('/:state/funfact')
-    .get(verifyState(), statesController.getRandomFact) // returns 1 random fun fact about the specified state 
-    .post(verifyState(), statesController.addNewStateFacts) // post 1 or more new state facts 
-    .patch(verifyState(), statesController.updateStateFact) // update existing fun fact at index
-    .delete(verifyState(), statesController.deleteStateFact) // delete fun fact at index 
+    // Returns 1 random fun fact about the specified state 
+    .get(verifyState(), statesController.getRandomFact) 
+    // Post one or more new state facts 
+    .post(verifyState(), statesController.addNewStateFacts) 
+    // Update existing fun fact at index
+    .patch(verifyState(), statesController.updateStateFact) 
+    // Delete fun fact at index 
+    .delete(verifyState(), statesController.deleteStateFact) 
 
 router.route('/:state/capital')
-    .get(verifyState(), statesController.getCapital) // returns the state and capital 
+    // Returns the state and capital 
+    .get(verifyState(), statesController.getCapital) 
 
 router.route('/:state/nickname')
-    .get(verifyState(), statesController.getNickName) // returns the state and nickname 
+    // Returns the state and nickname 
+    .get(verifyState(), statesController.getNickName) 
 
 router.route('/:state/population')
-    .get(verifyState(), statesController.getPop) // returns the state and population 
+    // Returns the state and population 
+    .get(verifyState(), statesController.getPop) 
 
 router.route('/:state/admission')
-    .get(verifyState(), statesController.getAdmission) // returns the state and the date the state was admitted 
+    // Returns the state and the date the state was admitted 
+    .get(verifyState(), statesController.getAdmission) 
 
 module.exports = router;
