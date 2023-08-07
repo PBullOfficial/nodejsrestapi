@@ -1,21 +1,22 @@
 {
-  "name": "nodejsproject",
+  "name": "nodejsrestapi",
   "version": "1.0.0",
-  "description": "Node.js REST api project",
-  "main": "app.js",
-  "engines": {
-    "node": "14.x"
-  },
-  "dependencies": {
-    "dotenv": "^16.0.0",
-    "express": "^4.17.1",
-    "mongoose": "^6.1.2",
-    "states": "^0.0.2"
-  },
+  "description": "INF653 Node JS Rest API Final Project",
+  "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node server",
     "dev": "nodemon server"
   },
-  "author": "",
-  "license": "ISC"
+  "keywords": [],
+  "author": "Peter Bulloch",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "mongoose": "^6.3.0"
+  }
 }
